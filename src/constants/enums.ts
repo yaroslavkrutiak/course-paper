@@ -1,0 +1,12 @@
+export enum SexEnum {
+    MALE = 'MALE',
+    FEMALE = 'FEMALE'
+}
+
+export enum ClassesEnum {
+    MATHEMATICS = 'MATHEMATICS',
+    SYSTEM_ANALYSIS = 'SYSTEM_ANALYSIS',
+    WEB_DESIGN = 'WEB_DESIGN',
+    DATABASES = 'DATABASES',
+    COMPUTER_NETWORKING = 'COMPUTER_NETWORKING'
+}
