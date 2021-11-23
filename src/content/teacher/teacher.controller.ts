@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, UseGuards} from '@nestjs/common';
 import {TeacherService} from "./teacher.service";
 import {TeacherDto} from "../dto/teacher.dto";
 import {InsertClassDto} from "../dto/class.dto";

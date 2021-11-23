@@ -1,1 +1,4 @@
-export const classes = []
+export enum roles {
+    USER = 'USER',
+    ADMIN = 'ADMIN'
+}
