@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Teacher</title>
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        li {
+            padding-bottom: 1em;
+        }
+
+        .center {
+            display: block;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        button {
+            background-color: white;
+            border-radius: 10px;
+            border: 1px black solid;
+        }
+    </style>
+</head>
+<body>
+<div class="center">
+    <ul>
+        {{#each this}}
+            {{#if this.name}}
+                <li>
+                    <a href="http://localhost:3000/api/teacher/{{_id}}">{{name}}
+                        <button>Open</button>
+                    </a>
+                    <a href="http://localhost:3000/api/teacher/{{_id}}/class">
+                        <button>Classes</button>
+                    </a><br>
+                </li>
+            {{/if}}
+        {{/each}}
+    </ul>
+        <div class="crud">
+            <form target="_self" onsubmit="" method="post">
+                <label>Create new<br>
+                    Name: <input type="text" value="" name="name"><br>
+                    Age: <input type="text" value="" name="age"><br>
+                    Sex: <input type="text" value="" name="sex"><br>
+                </label><br>
+                <button type="submit">Proceed</button>
+            </form>
+        </div>
+</div>
+</body>
+</html>

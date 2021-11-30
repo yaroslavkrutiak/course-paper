@@ -2,7 +2,7 @@ import {
   Body,
   Controller,
   Get, HttpCode, NotFoundException,
-  Post, Query,
+  Post, Query, Render,
   Req,
   Res,
   UnauthorizedException,
@@ -19,23 +19,43 @@ export class AppController {
 
   @Post('auth/login')
   @HttpCode(200)
-  async login(@Body() req, @Res({ passthrough: true }) response){
-    const {_id, username} = await this.authService.validateUser(req.login, req.password)
-    if (!_id){
-      throw new NotFoundException();
-    }else {
-      response.cookie('auth', _id)
-      return {username}
+  async login(@Req() request, @Body() req, @Res({ passthrough: true }) response){
+    const {auth} = request.cookies
+    if (!auth) {
+      const {_id} = await this.authService.validateUser(req.username, req.password)
+      if (!_id) {
+      } else {
+        response.cookie('auth', _id)
+        response.redirect('/profile')
+      }
+    }else{
+      response.redirect('/profile')
     }
   }
 
-  @Get('profile')
-  async getProfile(@Req() request) {
+  @Get('auth/login')
+  @Render('login')
+
+  @Get('auth/login')
+  @Render('login')
+
+  @Get('home')
+  @Render('home')
+  async getMenu(@Req() request, @Res({ passthrough: true }) response){
     const {auth} = request.cookies
-    const user = await this.authService.findUserById(auth)
-    if (!user){
-      throw new UnauthorizedException()
+    if (!auth){
+      response.redirect('/auth/login')
     }
-    return user;
+    return await this.authService.findUserById(auth)
+  }
+
+  @Get('profile')
+  @Render('profile')
+  async getProfile(@Req() request, @Res({ passthrough: true }) response) {
+    const {auth} = request.cookies
+    if (!auth){
+      response.redirect('/auth/login')
+    }
+    return await this.authService.findUserById(auth);
   }
 }

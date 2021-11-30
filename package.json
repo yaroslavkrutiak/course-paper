@@ -31,6 +31,7 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.2",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "hbs": "^4.2.0",
     "mongoose": "^6.0.13",
     "passport": "^0.4.1",

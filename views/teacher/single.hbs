@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Teacher</title>
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        li {
+            padding-bottom: 1em;
+        }
+
+        section{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        button {
+            background-color: white;
+            border-radius: 10px;
+            border: 1px black solid;
+        }
+        div{
+            margin: 3em auto;
+        }
+        .crud{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        form{
+            align-items: center;
+            text-align: center;
+        }
+        label{
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<script>
+    async function putCrud(){
+        const name = document.getElementById('nameField').value
+        const age = document.getElementById('ageField').value
+        const sex = document.getElementById('sexField').value
+        const data = { name, age, sex }
+        console.log(data)
+        const edited = await fetch(window.location.href,{
+            method:'put',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        }).then(data => data.json())
+        document.location.reload()
+    }
+    async function deleteCrud(){
+        const deleted = await fetch(window.location.href,{
+            method:'delete',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(data => data.json())
+        window.location.href = 'http://localhost:3000/api/teacher/'
+    }
+</script>
+
+<section>
+    <div class="buttonDiv">
+        <a href="http://localhost:3000/api/teacher/{{_id}}/class">
+            <button>Go to classes</button>
+        </a>
+    </div>
+    <div class="crud">
+        <form target="_self" onsubmit="" method="">
+            <label>Edit<br>
+                Name: <input id="nameField" type="text" value="{{name}}" name="day"><br>
+                Age: <input id="ageField" type="text" value="{{age}}" name="day"><br>
+                Sex: <input id="sexField" type="text" value="{{sex}}" name="day"><br>
+            </label><br>
+            <button type="submit" onclick="return putCrud()">Proceed</button>
+        </form>
+    </div>
+    <div>
+    <button type="" onclick="return deleteCrud()">Delete</button>
+    </div>
+</section>
+
+
+</body>
+</html>

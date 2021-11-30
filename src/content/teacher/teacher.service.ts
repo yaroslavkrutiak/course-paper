@@ -16,11 +16,11 @@ export class TeacherService {
     }
 
     async getTeacherById(id) {
-        return this.teacherModel.findById(id)
+        return this.teacherModel.findById(id)/*.populate('classes')*/
     }
 
     async deleteTeacherById(id) {
-        return this.teacherModel.remove({_id: id})
+        return this.teacherModel.deleteOne({_id: id})
     }
 
     async updateTeacherById(body: UpdateQuery<TeacherDocument>, id) {
@@ -29,11 +29,29 @@ export class TeacherService {
 
     async getTeacherClasses(id) {
         const teacher = await this.teacherModel.findOne({_id: id}).populate('classes', '', this.classModel).exec()
-        return teacher.classes
+        if(Array.isArray(teacher.classes)){
+            return teacher.classes
+        }else{
+            return [teacher.classes]
+        }
+    }
+
+    async deleteTeacherClasses(id, classId) {
+        const classes = await this.getTeacherClasses(id)
+        const classesToDelete = [...classes]
+        const classesToUpdate = classesToDelete.find(elem => elem._id.toString() !== classId)
+        if (Array.isArray(classesToUpdate)){
+            const arr = classesToUpdate.map(a => a._id)
+            await this.teacherModel.updateOne({_id: id}, {classes: [...arr]})
+        }else{
+            await this.teacherModel.updateOne({_id: id}, {classes: [classesToUpdate._id]})
+        }
+        const deletedClass = classesToDelete.find(elem => elem._id.toString() === classId)
+        return deletedClass
     }
 
     async insertTeacher(body: TeacherDto) {
-        return new this.teacherModel(body).save();
+        return new this.teacherModel(Object.assign(body, {classes:[]})).save();
     }
 
     async insertTeacherClass(body: InsertClassDto, id: string) {

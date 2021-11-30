@@ -16,7 +16,7 @@ export class Teacher {
     @Prop({required: true})
     sex: SexEnum;
 
-    @Prop({ type: Mongoose.Types.ObjectId , ref: 'class' })
+    @Prop({ type: Mongoose.Types.ObjectId , ref: 'class', required: false })
     classes: Mongoose.Types.ObjectId[];
 }
 

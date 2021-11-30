@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Class</title>
+    <script>
+        async function deleteClassCrud(_id) {
+            console.log(window.location.href)
+            const deletedClass = await fetch(window.location.href + `/${_id}`, {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(data => data.json())
+            document.location.reload()
+            // window.location.href = 'http://localhost:3000/api/teacher/'
+        }
+        async function insertTeacherClassCrud() {
+            const name = document.getElementById('nameField').value
+            const insertedTeacherClass = await fetch(window.location.href, {
+                method: 'put',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({name})
+            }).then(data => data.json())
+
+            document.location.reload()
+        }
+    </script>
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        li {
+            padding-bottom: 1em;
+        }
+        /*body{*/
+        /*    margin: 0 auto;*/
+        /*}*/
+        .center {
+            display: block;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        button {
+            background-color: white;
+            border-radius: 10px;
+            border: 1px black solid;
+        }
+    </style>
+</head>
+<body>
+<div class="center">
+    <ul>
+            {{#each this}}
+                {{#if this.name}}
+                <li>
+                    {{name}}<button onclick="return deleteClassCrud('{{_id}}')">Delete</button>
+                </li>
+                {{/if}}
+            {{/each}}
+    </ul>
+    <div class="crud">
+        <form target="_self" onsubmit="" method="">
+            <label>Add Class<br>
+                Name: <input id="nameField" type="text" value="" name="name"><br>
+            </label><br>
+        </form>
+        <button type="submit" onclick="return insertTeacherClassCrud()">Proceed</button>
+    </div>
+</div>
+</body>
+</html>

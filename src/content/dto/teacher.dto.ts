@@ -1,4 +1,4 @@
-import {IsEnum, IsNotEmpty, IsNumber, IsString} from "class-validator";
+import {IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString} from "class-validator";
 import {ClassesEnum, SexEnum} from "../../constants/enums";
 
 export class TeacherDto {
@@ -16,5 +16,6 @@ export class TeacherDto {
 
     @IsNotEmpty()
     @IsEnum(ClassesEnum)
+    @IsOptional()
     classes: ClassesEnum
 }
