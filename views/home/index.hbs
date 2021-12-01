@@ -5,27 +5,88 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>menu</title>
-<!--    <style>-->
-<!--        .flexbox-column{-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--        }-->
-<!--        .flexbox-row{-->
-<!--            display: flex;-->
-<!--            flex-direction: row;-->
-<!--        }-->
-<!--    </style>-->
+    <title>Home</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+        .flexbox-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        html,
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: url(https://subtlepatterns.com/patterns/sativa.png) repeat fixed;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            min-width: 8rem;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            border: none;
+            outline: none;
+            border-radius: 5rem;
+            color: #fff;
+            opacity: 0.8;
+            margin-bottom: 0.1em;
+        }
+
+        .btn:hover {
+            opacity: 1;
+        }
+
+        .btn-cancel {
+            background-color: #d9534f;
+            margin-right: 20px;
+        }
+
+        .btn-green {
+            background-color: #5cb85c;
+        }
+    </style>
 </head>
 <body>
-<!--<div class="flexbox-column">-->
-<!--    <div class="flexbox-row"><form method="get" onsubmit="console.log('profile')" target="_self"><input type="submit" value="profile"></form></div>-->
-<!--    <div class="flexbox-row"></div>-->
-<!--    <div class="flexbox-row"></div>-->
-<!--</div>-->
-<!--<script>-->
-<!--    console.log('asdfghjkl')-->
-<!--</script>-->
-qwasdsdsfsf
+<div class="flexbox-column">
+    <a href="http://localhost:3000/api/teacher">
+        <button type="button" class="btn btn-green" id="btn-cancel">
+            Teacher
+        </button>
+    </a>
+    <a href="http://localhost:3000/api/class">
+        <button type="button" class="btn btn-green" id="btn-cancel">
+            Class
+        </button>
+    </a>
+    <a href="http://localhost:3000/profile">
+        <button type="button" class="btn btn-green" id="btn-cancel">
+            Profile
+        </button>
+    </a>
+    <a>
+        <button type="button" class="btn btn-green" id="btn-cancel">
+            Magical Algorithm
+        </button>
+    </a>
+</div>
 </body>
 </html>

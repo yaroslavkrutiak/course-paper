@@ -7,6 +7,8 @@ import {TeacherModule} from "./content/teacher/teacher.module";
 import {ClassModule} from "./content/class/class.module";
 import {AuthModule} from "./authentication/auth/auth.module";
 import { AuthController } from './authentication/auth/auth.controller';
+import {UserController} from "./authentication/user/user.controller";
+import {UserModule} from "./authentication/user/user.module";
 
 @Module({
   imports: [
@@ -20,8 +22,9 @@ import { AuthController } from './authentication/auth/auth.controller';
     }),
     TeacherModule,
     ClassModule,
-    AuthModule],
-  controllers: [AppController, AuthController],
+    AuthModule,
+    UserModule],
+  controllers: [AppController, AuthController, UserController],
   providers: [AppService],
 })
 export class AppModule {}

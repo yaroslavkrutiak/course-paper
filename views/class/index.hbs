@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Classes</title>
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        li {
+            padding-bottom: 1em;
+        }
+
+        body{
+            display: flex;
+        }
+
+        .center {
+            text-align: center;
+
+        }
+
+        button {
+            background-color: white;
+            border-radius: 10px;
+            border: 1px black solid;
+        }
+    </style>
+    <script>
+        async function insertClassCrud() {
+            const name = document.getElementById('nameField').value
+            const credits = document.getElementById('creditsField').value
+            const insertedClass = await fetch(window.location.href, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({name, credits})
+            }).then(data => data.json())
+
+            document.location.reload()
+        }
+    </script>
+</head>
+<body>
+<div class="center">
+    <ul>
+        {{#each this}}
+            {{#if this.name}}
+                <li>
+                    <a href="http://localhost:3000/api/class/{{_id}}">{{name}}
+                        <button>Open</button>
+                    </a>
+                </li>
+            {{/if}}
+        {{/each}}
+    </ul>
+    <div class="crud">
+        <form target="_self" onsubmit="" method="post">
+            <label>Create new<br>
+                Name: <input id="nameField" type="text" value="" name="name"><br>
+                Credits: <input id="creditsField" type="text" value="" name="credits"><br>
+            </label><br>
+        </form>
+        <button type="" onclick="return insertClassCrud()">Proceed</button>
+    </div>
+</div>
+</body>
+</html>

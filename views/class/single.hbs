@@ -7,9 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{name}}</title>
     <style>
-        body{
-            background: url(https://subtlepatterns.com/patterns/sativa.png) repeat fixed;
-        }
         a {
             text-decoration: none;
             color: black;
@@ -55,9 +52,8 @@
 <script>
     async function putCrud(){
         const name = document.getElementById('nameField').value
-        const age = document.getElementById('ageField').value
-        const sex = document.getElementById('sexField').value
-        const data = { name, age, sex }
+        const credits = document.getElementById('creditsField').value
+        const data = { name, credits }
         console.log(data)
         const edited = await fetch(window.location.href,{
             method:'put',
@@ -75,28 +71,22 @@
                 'Content-Type': 'application/json',
             }
         }).then(data => data.json())
-        window.location.href = 'http://localhost:3000/api/teacher/'
+        window.location.href = 'http://localhost:3000/api/class'
     }
 </script>
 
 <section>
-    <div class="buttonDiv">
-        <a href="http://localhost:3000/api/teacher/{{_id}}/class">
-            <button>Go to classes</button>
-        </a>
-    </div>
     <div class="crud">
         <form target="_self" onsubmit="" method="">
             <label>Edit<br>
                 Name: <input id="nameField" type="text" value="{{name}}" name="day"><br>
-                Age: <input id="ageField" type="text" value="{{age}}" name="day"><br>
-                Sex: <input id="sexField" type="text" value="{{sex}}" name="day"><br>
+                Credits: <input id="creditsField" type="text" value="{{credits}}" name="day"><br>
             </label><br>
-            <button type="submit" onclick="return putCrud()">Proceed</button>
+            <button type="" onclick="return putCrud()">Proceed</button>
         </form>
     </div>
     <div>
-    <button type="" onclick="return deleteCrud()">Delete</button>
+        <button type="" onclick="return deleteCrud()">Delete</button>
     </div>
 </section>
 

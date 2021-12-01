@@ -25,6 +25,6 @@ export class ClassService {
     }
 
     async deleteClassById(id){
-        return this.classModel.remove({_id: id})
+        return this.classModel.deleteOne({_id: id})
     }
 }

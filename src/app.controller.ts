@@ -10,11 +10,13 @@ import {
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import {AuthService} from "./authentication/auth/auth.service";
+import {UserService} from "./authentication/user/user.service";
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService,
               private readonly authService: AuthService,
+              private readonly userService: UserService
               ) {}
 
   @Post('auth/login')
@@ -22,32 +24,52 @@ export class AppController {
   async login(@Req() request, @Body() req, @Res({ passthrough: true }) response){
     const {auth} = request.cookies
     if (!auth) {
-      const {_id} = await this.authService.validateUser(req.username, req.password)
-      if (!_id) {
+      const user = await this.authService.validateUser(req.username, req.password)
+      if (!user) {
+        response.redirect('/auth/login')
       } else {
-        response.cookie('auth', _id)
-        response.redirect('/profile')
+        response.cookie('auth', user._id)
+        response.redirect('/home')
       }
     }else{
-      response.redirect('/profile')
+      response.redirect('/home')
     }
+  }
+
+  @Post('auth/logout')
+  logout(@Req() request, @Res({ passthrough: true }) response){
+    request.clearCookie('auth', {path: '/', domain: 'localhost'}).send();
+    response.redirect('/auth/login')
   }
 
   @Get('auth/login')
   @Render('login')
+  getLoginPage(){}
 
-  @Get('auth/login')
-  @Render('login')
+  @Post('auth/register')
+  @HttpCode(200)
+  async register(@Req() request, @Body() body, @Res({ passthrough: true }) response){
+      const user = await this.userService.insertUser(body)
+      if (!user) {
+        response.redirect('/auth/login')
+      } else {
+        response.cookie('auth', user._id)
+        response.redirect('/home')
+      }
+  }
+
+  @Get()
+  redirectToLogin(@Res({ passthrough: true }) response){
+    response.redirect('/auth/login')
+  }
+
+  @Get('auth/register')
+  @Render('register')
+  getRegisterPage(){}
 
   @Get('home')
   @Render('home')
-  async getMenu(@Req() request, @Res({ passthrough: true }) response){
-    const {auth} = request.cookies
-    if (!auth){
-      response.redirect('/auth/login')
-    }
-    return await this.authService.findUserById(auth)
-  }
+  getHomePage(){}
 
   @Get('profile')
   @Render('profile')
@@ -56,6 +78,6 @@ export class AppController {
     if (!auth){
       response.redirect('/auth/login')
     }
-    return await this.authService.findUserById(auth);
+    return this.authService.findUserById(auth);
   }
 }

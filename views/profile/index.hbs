@@ -6,6 +6,16 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile</title>
+    <script>
+        async function logout() {
+            await fetch('http://localhost:3000/auth/logout', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }).then(data => data.json())
+        }
+    </script>
     <style>
         * {
             -ms-box-sizing: border-box;
@@ -42,7 +52,8 @@
     <div class="username">
         You are logged in<br>
         Username: {{username}}<br>
-        Role: {{role}}
+        Role: {{role}}<br>
+        <button id="signOutButton" onclick="return logout()">Logout</button>
     </div>
 </body>
 </html>
